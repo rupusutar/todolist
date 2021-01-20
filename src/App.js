@@ -25,13 +25,18 @@ function App() {
     setList([...list, newItem]);
     setItem('')
   }
+
+  const handleDeleteItem = id =>{
+    const filterdList = list.filter(itm => itm.id !== id)
+    setList(filterdList)
+  }
   return (
     <div className='container'>
       <div className='row'>
         <div className='col-10 col-md-8 mx-auto mt-4'>
           <h3 className='text-capitalize text-center'>Todo Input</h3>
           <TodoInput item ={item} onAddItem={handleAddItem} handleSubmit={handleSubmit}/>
-          <TodoList list={list} clearAll={()=>setList([])}/>
+          <TodoList list={list} clearAll={()=>setList([])} handleDeleteItem={handleDeleteItem}/>
         </div>  
       </div>
     </div>
