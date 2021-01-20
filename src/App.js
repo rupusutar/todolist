@@ -10,6 +10,7 @@ function App() {
 
   const [list, setList] =useState([]);
   const [item, setItem] = useState('');
+  const [editFlag, setEditFlag] = useState(false);
 
   const handleAddItem = e => {
     const newItem = e.target.value;
@@ -24,19 +25,37 @@ function App() {
     }
     setList([...list, newItem]);
     setItem('')
+    setEditFlag(false)
   }
 
   const handleDeleteItem = id =>{
     const filterdList = list.filter(itm => itm.id !== id)
     setList(filterdList)
   }
+
+  const handleEditItem = id => {
+    const seletectedItem = list.find(itm => itm.id === id)
+    handleDeleteItem(id)
+    setItem(seletectedItem.title)
+    setEditFlag(true)
+  }
+
   return (
     <div className='container'>
       <div className='row'>
         <div className='col-10 col-md-8 mx-auto mt-4'>
           <h3 className='text-capitalize text-center'>Todo Input</h3>
-          <TodoInput item ={item} onAddItem={handleAddItem} handleSubmit={handleSubmit}/>
-          <TodoList list={list} clearAll={()=>setList([])} handleDeleteItem={handleDeleteItem}/>
+          <TodoInput 
+            item ={item} 
+            onAddItem={handleAddItem} 
+            handleSubmit={handleSubmit} editFlag={editFlag}
+          />
+          <TodoList 
+            list={list} 
+            clearAll={()=>setList([])} 
+            handleDeleteItem={handleDeleteItem}
+            handleEditItem={handleEditItem}  
+          />
         </div>  
       </div>
     </div>
